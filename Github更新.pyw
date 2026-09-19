@@ -1,4 +1,4 @@
-# update_git.pyw
+# Github更新.pyw
 import sys
 import os
 import subprocess
@@ -17,20 +17,18 @@ def run_git(cmd, cwd):
     return result.returncode == 0, result.stdout + result.stderr
 
 def main():
-    if len(sys.argv) < 2:
-        return
+    # このpywが置いてあるフォルダを対象にする（日本語パス対応）
+    folder = os.path.dirname(os.path.abspath(__file__))
 
-    folder = sys.argv[1]
     if not os.path.isdir(folder):
+        messagebox.showerror("エラー", f"フォルダが存在しません:\n{folder}")
         return
 
-    # Gitリポジトリかチェック（ここで弾く）
     ok, _ = run_git(["rev-parse", "--is-inside-work-tree"], folder)
     if not ok:
-        # Gitじゃないフォルダでは何も出さない（静かに終了）
+        messagebox.showerror("エラー", "このフォルダはGitリポジトリではありません")
         return
 
-    # 変更があるか確認
     ok, status = run_git(["status", "--porcelain"], folder)
     if not status.strip():
         root = tk.Tk()
@@ -46,8 +44,7 @@ def main():
         "コミットメッセージを入力してください:\n（空欄の場合は「Update」になります）",
         parent=root
     )
-
-    if msg is None:  # キャンセル
+    if msg is None:
         return
     if not msg.strip():
         msg = "Update"

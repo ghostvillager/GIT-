@@ -1,0 +1,17 @@
+Windows Registry Editor Version 5.00
+
+; フォルダを右クリックしたとき
+[HKEY_CLASSES_ROOT\Directory\shell\UploadToGit]
+@="このフォルダをGitリポジトリにアップロード"
+"Icon"="git.exe"
+
+[HKEY_CLASSES_ROOT\Directory\shell\UploadToGit\command]
+@="pythonw.exe \"I:\\GIT登録右クリックメニュー\\upload_to_git.pyw\" \"%1\""
+
+; フォルダの中の空白を右クリックしたとき
+[HKEY_CLASSES_ROOT\Directory\Background\shell\UploadToGit]
+@="このフォルダをGitリポジトリにアップロード"
+"Icon"="git.exe"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\UploadToGit\command]
+@="pythonw.exe \"I:\\GIT登録右クリックメニュー\\upload_to_git.pyw\" \"%V\""
